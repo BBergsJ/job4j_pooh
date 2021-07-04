@@ -12,8 +12,8 @@ public class Req {
     }
 
     public static Req of(String content) {
-        /* TODO parse a content */
-        return new Req(null, null, null);
+        String[] rsl = content.split("[/ \"]+");
+        return new Req(rsl[0], rsl[1], rsl[rsl.length - 1]);
     }
 
     public String method() {

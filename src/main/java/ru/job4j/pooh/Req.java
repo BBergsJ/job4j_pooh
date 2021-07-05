@@ -13,6 +13,9 @@ public class Req {
 
     public static Req of(String content) {
         String[] rsl = content.split("[/ \"]+");
+        for (String s : rsl) {
+            System.out.println(s);
+        }
         return new Req(rsl[0], rsl[1], rsl[rsl.length - 1]);
     }
 

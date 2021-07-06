@@ -13,7 +13,7 @@ public class QueueService implements Service {
             QUEUE.get(req.queueName()).add(req.text());
             return new Resp("Posted!", 200);
         } else if (req.method().equalsIgnoreCase("get")) {
-            return new Resp("Topic created!", 200);
+            return new Resp(QUEUE.getOrDefault(req.queueName(), new ConcurrentLinkedQueue<String>()).poll(), 200);
         }
         return new Resp("Error!", 400);
     }

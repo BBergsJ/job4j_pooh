@@ -8,7 +8,13 @@ public class QueueService implements Service {
 
     @Override
     public Resp process(Req req) {
-
-        return null;
+        if (req.method().equalsIgnoreCase("post")) {
+            QUEUE.putIfAbsent(req.queueName(), new ConcurrentLinkedQueue<>());
+            QUEUE.get(req.queueName()).add(req.text());
+            return new Resp("Posted!", 200);
+        } else if (req.method().equalsIgnoreCase("get")) {
+            return new Resp("Topic created!", 200);
+        }
+        return new Resp("Error!", 400);
     }
 }

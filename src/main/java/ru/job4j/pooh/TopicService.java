@@ -9,12 +9,13 @@ public class TopicService implements Service {
             String,
             ConcurrentHashMap<String, ConcurrentLinkedQueue<String>
                     >> TOPIC = new ConcurrentHashMap<>();
+    private static volatile int connectedUserId = 0;
 
     @Override
     public Resp process(Req req) {
         if (req.method().equalsIgnoreCase("post")) {
             TOPIC.putIfAbsent(req.queueName(), new ConcurrentHashMap<>() {{
-                put(req.userId(), new ConcurrentLinkedQueue<>());
+                put(String.valueOf(connectedUserId++), new ConcurrentLinkedQueue<>());
             }});
             TOPIC.get(req.queueName()).get(req.userId()).add(req.text());
             return new Resp("Posted " + req.queueName(), 200);

@@ -8,6 +8,15 @@ public class TopicService implements Service {
 
     @Override
     public Resp process(Req req) {
-        return null;
+        if (req.method().equalsIgnoreCase("post")) {
+            QUEUE.putIfAbsent(req.queueName(), new ConcurrentLinkedQueue<>());
+            QUEUE.get(req.queueName()).add(req.text());
+            return new Resp("Posted " + req.queueName(), 200);
+        } else if (req.method().equalsIgnoreCase("get")) {
+            return QUEUE.containsKey(req.queueName())
+                    ? new Resp(QUEUE.get(req.queueName()).poll(), 200)
+                    : new Resp("", 404);
+        }
+        return new Resp("Error!", 400);
     }
 }

@@ -14,10 +14,7 @@ public class Req {
     }
 
     public static Req of(String content) {
-        String[] rsl = content.split("[/ \"]+");
-        for (String s : rsl) {
-            System.out.println(s);
-        }
+        String[] rsl = content.split("[/ \"%]+");
         return new Req(rsl[0], rsl[1], rsl[2], rsl[rsl.length - 1]);
     }
 

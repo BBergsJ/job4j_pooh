@@ -13,7 +13,9 @@ public class QueueService implements Service {
             QUEUE.get(req.queueName()).add(req.text());
             return new Resp("Posted!", 200);
         } else if (req.method().equalsIgnoreCase("get")) {
-            return new Resp(QUEUE.getOrDefault(req.queueName(), new ConcurrentLinkedQueue<String>()).poll(), 200);
+            return QUEUE.containsKey(req.queueName())
+                    ? new Resp(QUEUE.get(req.queueName()).poll(), 200)
+                    : new Resp("", 404);
         }
         return new Resp("Error!", 400);
     }

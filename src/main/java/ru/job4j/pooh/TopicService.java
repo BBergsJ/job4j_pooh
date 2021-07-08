@@ -22,9 +22,11 @@ public class TopicService implements Service {
     @Override
     public Resp process(Req req) {
         if (req.method().equalsIgnoreCase("post")) {
-            TOPIC.putIfAbsent(req.queueName(), new ConcurrentHashMap<>() {{
+            TOPIC.putIfAbsent(req.queueName(), new ConcurrentHashMap<>() {
+                {
                 put(req.userId(), new ConcurrentLinkedQueue<>());
-            }});
+                }
+            });
             TOPIC.get(req.queueName()).get(req.userId()).add(req.text());
             return new Resp("Posted " + req.queueName(), 200);
         } else if (req.method().equalsIgnoreCase("get")) {

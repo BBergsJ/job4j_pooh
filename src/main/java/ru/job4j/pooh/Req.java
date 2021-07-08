@@ -1,5 +1,11 @@
 package ru.job4j.pooh;
 
+/**
+ * Request model
+ * @author Dmitry Emelyanov
+ * @version 1.0
+ * @since 24.06.21
+ */
 public class Req {
     private final String method;
     private final String mode;
@@ -15,6 +21,11 @@ public class Req {
         this.text = text;
     }
 
+    /**
+     * Request parser
+     * @param content - a request to the server in string format
+     * @return Req - complete request object
+     */
     public static Req of(String content) {
         String[] rsl = content.split("[/ \"%]+");
         return new Req(rsl[0], rsl[1], rsl[2], rsl[3], rsl[rsl.length - 1]);

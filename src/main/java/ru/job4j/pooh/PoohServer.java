@@ -8,10 +8,21 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-
+/**
+ * Main class with server-start method
+ * @author Dmitry Emelyanov
+ * @version 1.0
+ * @since 24.06.21
+ */
 public class PoohServer {
+    /**
+     * HashMap, contains server modes
+     */
     private final HashMap<String, Service> modes = new HashMap<>();
 
+    /**
+     * Launches server, creates threads pool
+     */
     public void start() {
         modes.put("queue", new QueueService());
         modes.put("topic", new TopicService());
